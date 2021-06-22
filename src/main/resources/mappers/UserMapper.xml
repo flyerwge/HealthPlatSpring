@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flyerwge.healthplat.mapper.UserMapper">
+
+<!--    resultType:返回值形式-->
+    <select id="getUserByMessage" resultType="flyerwge.healthplat.entity.User">
+--         select * from user where  username = 'admin' and password = '123456'
+        select * from user where  user_name = #{userName} and password = #{password}
+    </select>
+
+<!--    根据用户名查询-->
+    <select id="getAllUser" resultType="flyerwge.healthplat.entity.User">
+        select  * from user
+        <if test="userName != null">where user_name like #{userName}</if>
+        limit #{pageStart},#{pageSize}
+    </select>
+
+    <select id="getUserCounts" resultType="java.lang.Integer">
+        select count(*) from user
+        <if test="userName != null">where user_name like #{userName}</if>
+    </select>
+
+<!--    根据主键id修改状态码-->
+    <update id="updateState">
+        update user set  state = #{state} where id = #{id}
+    </update>
+
+<!--    根据主键删除-->
+    <delete id="deleteUser">
+        delete from user where id = #{id}
+    </delete>
+
+<!--    添加用户-->
+    <insert id="addUser">
+        insert into user
+            (uesr_name,password,email,state)
+            value
+            (#{userName},#{password},#{email},#{state})
+    </insert>
+
+    <select id="getUpdateUser" resultType="flyerwge.healthplat.entity.User">
+        select * from user where id = #{id}
+    </select>
+    <update id="editUser">
+        update user set user_name = #{userName},password = #{password},email = #{email} where id = #{id}
+    </update>
+
+<!--    用户注册-->
+    <insert id="userRegister">
+        insert into user
+    </insert>
+
+
+</mapper>
